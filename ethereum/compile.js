@@ -51,7 +51,10 @@ async function compileContracts() {
         console.log(
           `Writing compiled contract ${key} to a JSON file: ${contract}`
         );
-        fs.outputJsonSync(path.resolve(buildPath, key + ".json"), contract);
+        fs.outputJsonSync(
+          path.resolve(buildPath, key + ".json"),
+          contract[key]
+        );
         module.exports[key] = contract[key];
       }
 
