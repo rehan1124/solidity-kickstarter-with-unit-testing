@@ -14,17 +14,25 @@ let campaign;
 beforeEach(async () => {
   // List of accounts
   accounts = await web3.eth.getAccounts();
-  console.log(`List of accounts: ${accounts}`);
-  factory = await new web3.eth.Contract(JSON.parse(compiledFactory.abi))
+  // console.log(`List of accounts: ${accounts}`);
+  // --- Deployment-1: Creating a new deployment of contract ---
+  factory = await new web3.eth.Contract(compiledFactory.abi)
     .deploy({ data: compiledFactory.evm.bytecode.object })
-    .send({ from: accounts[0], gas: 1000000 });
+    .send({ from: accounts[0], gas: "2000000" });
 
-  await factory.methods.createCampaign(100).send({ from: accounts[0] });
+  await factory.methods
+    .createCampaign(100)
+    .send({ from: accounts[0], gas: "2000000" });
   // Take out first address
   [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
   console.log(`Campaign deployed at address: ${campaignAddress}`);
-  campaign = await new web3.eth.Contract(
-    JSON.parse(compiledCampaign.abi),
-    campaignAddress
-  );
+  // --- Deployment-2: Using an existing contract deployed at some address ---
+  campaign = await new web3.eth.Contract(compiledCampaign.abi, campaignAddress);
+});
+
+describe("When KickstarterFactory.sol is compiled,", () => {
+  it("Deployes CampaignFactory & Campaign", () => {
+    assert.ok(factory._address);
+    assert.ok(campaign._address);
+  });
 });
