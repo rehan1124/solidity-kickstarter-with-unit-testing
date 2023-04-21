@@ -57,4 +57,28 @@ describe("[Scenario] When contract is deployed,", async () => {
 
     assert(isContributor);
   });
+
+  it("[Test] Minimum contribution amount is mandatory.", async () => {
+    const lessThanMinContributor = accounts[3];
+    try {
+      await campaign.methods
+        .contribute()
+        .send({ from: lessThanMinContributor, value: "5" });
+    } catch (err) {
+      assert(err);
+    }
+  });
+
+  it("[Test] Manager can create a payment request.", async () => {
+    const managerAddress = accounts[0];
+    const sendMoneyToAccount = accounts[4];
+    const requestDescription = "Buy chips";
+
+    await campaign.methods
+      .createRequest(requestDescription, 100, sendMoneyToAccount)
+      .send({ from: managerAddress, gas: gasLimit });
+
+    const requestCreated = await campaign.methods.requests(0).call();
+    assert(requestDescription, requestCreated.description);
+  });
 });
