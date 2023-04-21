@@ -4,7 +4,7 @@
   "description": "User interface for our Kickstarter campaign app",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --parallel"
   },
   "repository": {
     "type": "git",
