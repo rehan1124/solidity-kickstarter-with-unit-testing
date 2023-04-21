@@ -51,7 +51,9 @@ describe("[Scenario] When contract is deployed,", async () => {
       .send({ from: newContributor, value: 200 });
 
     // Check if person has become approver (Checking mapping)
-    const isContributor = await campaign.methods.approvers(newContributor);
+    const isContributor = await campaign.methods
+      .approvers(newContributor)
+      .call();
 
     assert(isContributor);
   });
