@@ -81,4 +81,38 @@ describe("[Scenario] When contract is deployed,", async () => {
     const requestCreated = await campaign.methods.requests(0).call();
     assert(requestDescription, requestCreated.description);
   });
+
+  it("[Test] Process request for money transfer.", async () => {
+    const manager = { from: accounts[0], gas: gasLimit };
+
+    // Contributing 10 ether towards Campaign
+    await campaign.methods
+      .contribute()
+      .send({ from: accounts[0], value: web3.utils.toWei("10", "ether") });
+
+    // Get initial balance for recipient
+    const initialBalance = await web3.eth.getBalance(accounts[1]);
+
+    // Send money to recipient
+    await campaign.methods
+      .createRequest(
+        "Transport arrangements",
+        web3.utils.toWei("5", "ether"),
+        accounts[1]
+      )
+      .send({ ...manager });
+
+    // Approve the request created
+    await campaign.methods.approveRequest(0).send({ ...manager });
+
+    // Finalize the request
+    await campaign.methods.finalizeRequest(0).send({ ...manager });
+
+    // Final balance for recipient
+    const finalBalance = await web3.eth.getBalance(accounts[1]);
+
+    assert(
+      finalBalance - initialBalance === Number(web3.utils.toWei("5", "ether"))
+    );
+  });
 });
