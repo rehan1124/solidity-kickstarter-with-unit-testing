@@ -105,3 +105,4 @@ dist
 
 # Solidity and Ethereum
 compile.txt
+deploy.txt
