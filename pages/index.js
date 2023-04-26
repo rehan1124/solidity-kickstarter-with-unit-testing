@@ -4,13 +4,14 @@ import instance from "../ethereum/factory";
 import factory from "../ethereum/factory";
 
 class CampaignIndex extends Component {
-  async componentDidMount() {
+  // To get initial data using nextjs server from Ethereum
+  static async getInitialProps() {
     const campaignList = await factory.methods.getDeployedCampaigns().call();
-    console.log(campaignList);
+    return { campaignList };
   }
 
   render() {
-    return <div>List of campaigns !!!</div>;
+    return <div>{this.props.campaignList}</div>;
   }
 }
 
