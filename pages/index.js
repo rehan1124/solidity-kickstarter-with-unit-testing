@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import web3 from "../ethereum/web3";
 import instance from "../ethereum/factory";
 import factory from "../ethereum/factory";
+import "semantic-ui-css/semantic.min.css";
 
 class CampaignIndex extends Component {
   // To get initial data using nextjs server from Ethereum
