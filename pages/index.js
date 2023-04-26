@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Card } from "semantic-ui-react";
+import { Card, Button } from "semantic-ui-react";
 // import web3 from "../ethereum/web3";
 // import instance from "../ethereum/factory";
 import factory from "../ethereum/factory";
@@ -27,7 +27,18 @@ class CampaignIndex extends Component {
   }
 
   render() {
-    return <div data-testid="campaign-list">{this.renderCampaigns()}</div>;
+    return (
+      <div>
+        <div data-testid="campaign-list">{this.renderCampaigns()}</div>
+        <Button
+          data-testid="create-campaign"
+          content="Create Campaign"
+          icon="add circle"
+          // labelPosition="left"
+          primary
+        />
+      </div>
+    );
   }
 }
 
