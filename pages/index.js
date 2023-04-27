@@ -31,14 +31,15 @@ class CampaignIndex extends Component {
     return (
       <Layout>
         <h2>Open campaigns</h2>
-        <div data-testid="campaign-list">{this.renderCampaigns()}</div>
         <Button
+          floated="right"
           data-testid="create-campaign"
           content="Create Campaign"
           icon="add circle"
           // labelPosition="left"
           primary
         />
+        <div data-testid="campaign-list">{this.renderCampaigns()}</div>
       </Layout>
     );
   }
