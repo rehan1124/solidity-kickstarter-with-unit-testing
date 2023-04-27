@@ -6,7 +6,20 @@ class CampaignNew extends Component {
   render() {
     return (
       <Layout>
-        <h1>New campaign.</h1>
+        <h3>--- Create a new Campaign ---</h3>
+        <form className="ui form">
+          <div className="field">
+            <label>Minimum contribution:</label>
+            <input
+              type="text"
+              name="minimum-contribution"
+              placeholder="Minimum contribution"
+            />
+          </div>
+          <button className="ui button primary" type="submit">
+            Create
+          </button>
+        </form>
       </Layout>
     );
   }
