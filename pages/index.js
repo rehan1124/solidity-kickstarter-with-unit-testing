@@ -30,6 +30,7 @@ class CampaignIndex extends Component {
   render() {
     return (
       <Layout>
+        <h2>Open campaigns</h2>
         <div data-testid="campaign-list">{this.renderCampaigns()}</div>
         <Button
           data-testid="create-campaign"
