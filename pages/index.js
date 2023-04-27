@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Card, Button, Header } from "semantic-ui-react";
+import { Card, Button } from "semantic-ui-react";
+import Layout from "../components/Layout";
 // import web3 from "../ethereum/web3";
 // import instance from "../ethereum/factory";
 import factory from "../ethereum/factory";
@@ -28,8 +29,7 @@ class CampaignIndex extends Component {
 
   render() {
     return (
-      <div>
-        <Header as="h3">Open Campaigns</Header>
+      <Layout>
         <div data-testid="campaign-list">{this.renderCampaigns()}</div>
         <Button
           data-testid="create-campaign"
@@ -38,7 +38,7 @@ class CampaignIndex extends Component {
           // labelPosition="left"
           primary
         />
-      </div>
+      </Layout>
     );
   }
 }
