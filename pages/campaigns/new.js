@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Script from "next/script";
 import "semantic-ui-css/semantic.min.css";
 import Layout from "../../components/Layout";
 import Error from "../../components/Error";
@@ -8,8 +9,21 @@ import web3 from "../../ethereum/web3";
 class CampaignNew extends Component {
   constructor(props) {
     super(props);
-    this.state = { minimumInput: "", errorMessage: "", hasError: false };
+    this.state = {
+      minimumInput: "",
+      errorMessage: "",
+      hasError: false,
+      loading: false,
+    };
   }
+
+  handleButtonClick = async (event) => {
+    event.target.classList.toggle("loading");
+    setTimeout(function () {
+      event.target.classList.toggle("loading");
+    }, 2000);
+  };
+
   handleOnSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -49,6 +63,7 @@ class CampaignNew extends Component {
             className="ui button primary"
             type="submit"
             data-testid="form-submit"
+            onClick={this.handleButtonClick}
           >
             Create
           </button>
