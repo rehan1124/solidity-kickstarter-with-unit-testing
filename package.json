@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --parallel",
-    "dev": "next dev"
+    "dev": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "ganache": "^7.8.0",
     "mocha": "^10.2.0",
     "next": "^13.3.1",
+    "next-routes": "^1.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "semantic-ui-css": "^2.5.0",
