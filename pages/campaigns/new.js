@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Script from "next/script";
 import "semantic-ui-css/semantic.min.css";
 import Layout from "../../components/Layout";
 import Error from "../../components/Error";
+import { Router } from "../../routes";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
 
@@ -32,6 +32,7 @@ class CampaignNew extends Component {
       await factory.methods
         .createCampaign(this.state.minimumInput)
         .send({ from: accounts[0] });
+      Router.pushRoute("/");
     } catch (err) {
       this.setState({ errorMessage: err.message, hasError: true });
     }
@@ -64,7 +65,7 @@ class CampaignNew extends Component {
             className="ui button primary"
             type="submit"
             data-testid="form-submit"
-            onClick={this.handleButtonClick}
+            onSubmit={this.handleButtonClick}
           >
             Create
           </button>
