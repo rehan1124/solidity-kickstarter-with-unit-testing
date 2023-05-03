@@ -30,7 +30,7 @@ class CampaignIndex extends Component {
   render() {
     return (
       <Layout>
-        <h2>Open campaigns</h2>
+        <h2>--- Open campaigns ---</h2>
         <Button
           floated="right"
           data-testid="create-campaign"
