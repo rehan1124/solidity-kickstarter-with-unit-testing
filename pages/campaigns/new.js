@@ -19,13 +19,14 @@ class CampaignNew extends Component {
 
   handleButtonClick = async (event) => {
     event.target.classList.toggle("loading");
-    setTimeout(function () {
+    setTimeout(() => {
       event.target.classList.toggle("loading");
-    }, 2000);
+    }, 1500);
   };
 
   handleOnSubmit = async (event) => {
     event.preventDefault();
+    this.setState({ hasError: false });
     try {
       const accounts = await web3.eth.getAccounts();
       await factory.methods
