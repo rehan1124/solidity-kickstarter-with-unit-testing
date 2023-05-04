@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "../routes";
 
 export default () => {
   return (
@@ -7,16 +8,20 @@ export default () => {
       data-testid="nav-bar"
       style={{ marginTop: "0.8rem" }}
     >
-      <a className="item" data-ol-has-click-handler="">
+      <Link route="/" className="item" data-ol-has-click-handler="">
         CrowdCoin
-      </a>
+      </Link>
       <div className="right menu">
-        <a className="item" data-ol-has-click-handler="">
-          Create campaign
-        </a>
-        <a className="item" data-ol-has-click-handler="">
+        <Link route="/" className="item" data-ol-has-click-handler="">
+          Campaigns
+        </Link>
+        <Link
+          route="/campaigns/new"
+          className="item"
+          data-ol-has-click-handler=""
+        >
           +
-        </a>
+        </Link>
       </div>
     </div>
   );
