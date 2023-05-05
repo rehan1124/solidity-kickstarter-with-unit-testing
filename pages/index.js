@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 // import web3 from "../ethereum/web3";
 // import instance from "../ethereum/factory";
 import factory from "../ethereum/factory";
+import { Link } from "../routes";
 
 class CampaignIndex extends Component {
   // To get initial data using nextjs server from Ethereum
@@ -16,11 +17,12 @@ class CampaignIndex extends Component {
   renderCampaigns() {
     // Read list of campaigns and convert them into a group of cards using map()
     // `fluid: true` property helps in covering full width of browser for a card
-    const items = this.props.campaignList.map((address) => {
+    const items = this.props.campaignList.map((address, index) => {
       return {
         header: address,
-        description: <a>View campaign</a>,
+        description: <Link route={`/campaigns/${address}`}>View campaign</Link>,
         fluid: true,
+        "data-testid": `campaign${index + 1}`,
       };
     });
 
@@ -30,15 +32,17 @@ class CampaignIndex extends Component {
   render() {
     return (
       <Layout>
-        <h2>--- Open campaigns ---</h2>
-        <Button
-          floated="right"
-          data-testid="create-campaign"
-          content="Create Campaign"
-          icon="add circle"
-          // labelPosition="left"
-          primary
-        />
+        <h2>Open campaigns 💸</h2>
+        <Link route="/campaigns/new">
+          <Button
+            data-testid="create-campaign"
+            floated="right"
+            content="Create Campaign"
+            icon="add circle"
+            className="ui primary button"
+            // labelPosition="left"
+          />
+        </Link>
         <div data-testid="campaign-list">{this.renderCampaigns()}</div>
       </Layout>
     );
