@@ -5,7 +5,7 @@ const abi = cf.abi;
 
 const instance = new web3.eth.Contract(
   abi,
-  "0xB26D45410391b8b165Ffa12910CED1a9B997ACE2"
+  "0x5c3A0aAE14061Bb4F102b23367fB42302447bF1d"
 );
 
 export default instance;

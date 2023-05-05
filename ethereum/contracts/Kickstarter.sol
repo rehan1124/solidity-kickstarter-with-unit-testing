@@ -83,4 +83,26 @@ contract Campaign {
         payable(r.recipient).transfer(r.value);
         r.complete = true;
     }
+
+    function getCampaignSummary()
+        public
+        view
+        returns (
+            uint minimumContribution,
+            uint contractBalance,
+            uint requestCount,
+            uint contributorsCount,
+            address managerAddress
+        )
+    {
+        minimumContribution = minimumContribution;
+        contractBalance = address(this).balance;
+        requestCount = _numRequest;
+        contributorsCount = peopleJoinedForContribution;
+        managerAddress = manager;
+    }
+
+    function getRequestsCount() public view returns (uint) {
+        return _numRequest;
+    }
 }

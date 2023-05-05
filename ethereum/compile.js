@@ -57,10 +57,6 @@ async function compileContracts() {
         );
         module.exports[key] = contract[key];
       }
-
-      // for (let key in contract) {
-      //   module.exports[key] = contract[key];
-      // }
     }
   } catch (e) {
     console.log("Error:", e);

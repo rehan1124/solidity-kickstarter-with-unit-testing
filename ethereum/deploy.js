@@ -2,7 +2,7 @@ const HDWalletProvider = require("@truffle/hdwallet-provider");
 const Web3 = require("web3");
 const compiledFactory = require("./build/CampaignFactory.json");
 const providerUrl = "<Infura URL>";
-const passwordPhrase = "<Password phrase from metamask account>";
+const passwordPhrase = "<Password phrase from Metamask account>";
 
 const deployContract = async () => {
   const provider = new HDWalletProvider(passwordPhrase, providerUrl);
@@ -33,10 +33,12 @@ const deployContract = async () => {
     }
   } catch (error) {
     console.log("An error occured!", error);
+  } finally {
+    provider.engine.stop();
   }
 };
 
 deployContract();
 
-// Contract has been deployed. Check link: https://sepolia.etherscan.io/address/0xb26d45410391b8b165ffa12910ced1a9b997ace2
-// Contract deployed at address: 0xB26D45410391b8b165Ffa12910CED1a9B997ACE2
+// Attempting to deploy from Metamask account: 0x838d9B77cc660E057a2f1CF2F0752245c314d935
+// Contract deployed at address: 0x5c3A0aAE14061Bb4F102b23367fB42302447bF1d

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
+import { Router } from "../../routes";
 import Layout from "../../components/Layout";
 import Error from "../../components/Error";
-import { Router } from "../../routes";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
 
