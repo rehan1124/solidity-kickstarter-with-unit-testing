@@ -43,3 +43,5 @@ const deployContract = async () => {
 };
 
 deployContract();
+
+// Contract deployed at address: 0x5c3A0aAE14061Bb4F102b23367fB42302447bF1d
