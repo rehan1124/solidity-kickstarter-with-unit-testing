@@ -88,14 +88,14 @@ contract Campaign {
         public
         view
         returns (
-            uint minimumContribution,
+            uint minContribution,
             uint contractBalance,
             uint requestCount,
             uint contributorsCount,
             address managerAddress
         )
     {
-        minimumContribution = minimumContribution;
+        minContribution = minimumContribution;
         contractBalance = address(this).balance;
         requestCount = _numRequest;
         contributorsCount = peopleJoinedForContribution;

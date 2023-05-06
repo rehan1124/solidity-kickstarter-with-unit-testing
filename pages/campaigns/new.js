@@ -1,83 +1,78 @@
-import React, { Component } from "react";
-import "semantic-ui-css/semantic.min.css";
+import React, { useState, useEffect } from "react";
 import { Router } from "../../routes";
+import { Button, Form, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import Error from "../../components/Error";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
 
-class CampaignNew extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      minimumInput: "",
-      errorMessage: "",
-      hasError: false,
-      loading: false,
-    };
-  }
+const CampaignNew = () => {
+  const [minimumInput, setMinimumInput] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [hasError, setHasError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  handleButtonClick = async (event) => {
-    event.target.classList.toggle("loading");
+  useEffect(() => {
+    if (hasError) {
+      console.log(errorMessage);
+    }
+  }, [hasError, errorMessage]);
+
+  const handleButtonClick = async () => {
+    setLoading(true);
     setTimeout(() => {
-      event.target.classList.toggle("loading");
+      setLoading(false);
     }, 1500);
   };
 
-  handleOnSubmit = async (event) => {
+  const handleOnSubmit = async (event) => {
     event.preventDefault();
-    this.setState({ hasError: false });
+    setHasError(false);
     try {
       const accounts = await web3.eth.getAccounts();
-      await factory.methods
-        .createCampaign(this.state.minimumInput)
-        .send({ from: accounts[0] });
+      console.log(minimumInput, typeof minimumInput);
+      await factory.methods.createCampaign(parseInt(minimumInput, 10)).send({
+        from: accounts[0],
+      });
+
       Router.pushRoute("/");
     } catch (err) {
-      this.setState({ errorMessage: err.message, hasError: true });
+      setErrorMessage(err.message);
+      setHasError(true);
     }
   };
-  render() {
-    return (
-      <Layout>
-        <h2>--- Create a new Campaign ---</h2>
-        <form
-          className="ui form"
-          data-testid="campaign-form"
-          onSubmit={this.handleOnSubmit}
-        >
-          <div className="field">
-            <label>Minimum contribution:</label>
-            <div className="ui right labeled input">
-              <input
-                type="text"
-                placeholder="Enter minimum contribution in wei"
-                data-testid="wei-input"
-                value={this.state.minimumInput}
-                onChange={(event) => {
-                  this.setState({ minimumInput: event.target.value });
-                }}
-              />
-              <div className="ui basic label">Wei</div>
-            </div>
-          </div>
-          <button
-            className="ui button primary"
-            type="submit"
-            data-testid="form-submit"
-            onSubmit={this.handleButtonClick}
-          >
-            Create
-          </button>
-        </form>
-        <div data-testid="error-message" style={{ marginTop: "1rem" }}>
-          {this.state.hasError && (
-            <Error errorMessage={this.state.errorMessage} />
-          )}
-        </div>
-      </Layout>
-    );
-  }
-}
 
-export default CampaignNew;
+  const handleInputOnChange = async (event) => {
+    setMinimumInput(event.target.value);
+  };
+
+  return (
+    <Layout>
+      <h1>Create a new Campaign</h1>
+      <Form onSubmit={handleOnSubmit} error={hasError}>
+        <Form.Field>
+          <label>Minimum Contribution:</label>
+          <Input
+            label="Wei"
+            labelPosition="right"
+            value={minimumInput}
+            onChange={handleInputOnChange}
+          />
+        </Form.Field>
+        <Message error content={errorMessage} />
+        <Button
+          primary
+          type="submit"
+          data-testid="form-submit"
+          loading={loading}
+          onClick={handleButtonClick}
+        >
+          Create
+        </Button>
+      </Form>
+      {hasError && <Error errorMessage={errorMessage} />}
+    </Layout>
+  );
+};
+
+export default React.memo(CampaignNew);
