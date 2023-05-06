@@ -1,8 +1,10 @@
+require("dotenv").config();
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const Web3 = require("web3");
 const compiledFactory = require("./build/CampaignFactory.json");
-const providerUrl = "<Infura URL>";
-const passwordPhrase = "<Password phrase from Metamask account>";
+
+const providerUrl = process.env.INFURA_URL;
+const passwordPhrase = process.env.METAMASK_PHRASE;
 
 const deployContract = async () => {
   const provider = new HDWalletProvider(passwordPhrase, providerUrl);
@@ -28,17 +30,16 @@ const deployContract = async () => {
     console.log("Contract abi:", JSON.stringify(compiledFactory.abi));
 
     // Stop the provider's engine after the deployment
-    if (provider.engine.running) {
+    if (provider.engine) {
       provider.engine.stop();
     }
   } catch (error) {
     console.log("An error occured!", error);
   } finally {
-    provider.engine.stop();
+    if (provider.engine) {
+      provider.engine.stop();
+    }
   }
 };
 
 deployContract();
-
-// Attempting to deploy from Metamask account: 0x838d9B77cc660E057a2f1CF2F0752245c314d935
-// Contract deployed at address: 0x5c3A0aAE14061Bb4F102b23367fB42302447bF1d
