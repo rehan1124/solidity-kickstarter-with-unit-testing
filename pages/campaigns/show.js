@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Card } from "semantic-ui-react";
+import { Card, Grid, GridColumn } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import ContributeForm from "../../components/ContributeForm";
 import campaign from "../../ethereum/campaign";
@@ -68,8 +68,12 @@ class ShowCampaign extends Component {
     return (
       <Layout>
         <h3>Campaign details</h3>
-        {this.renderCards()}
-        <ContributeForm />
+        <Grid>
+          <GridColumn width={10}>{this.renderCards()}</GridColumn>
+          <GridColumn width={6}>
+            <ContributeForm />
+          </GridColumn>
+        </Grid>
       </Layout>
     );
   }

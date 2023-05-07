@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Form, Input, Message, Button } from "semantic-ui-react";
 
 const ContributeForm = () => {
-  const [firstName, setFirstName] = useState("");
+  const [contribution, setContribution] = useState("");
 
   const handleInputChange = (event) => {
-    setFirstName(event.target.value);
+    setContribution(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Submitted firstName: ", firstName);
+    console.log("Submitted contribution: ", contribution);
   };
 
   return (
@@ -21,7 +21,7 @@ const ContributeForm = () => {
           placeholder="Contribution"
           label="ether"
           labelPosition="right"
-          value={firstName}
+          value={contribution}
           onChange={handleInputChange}
         />
       </Form.Field>
