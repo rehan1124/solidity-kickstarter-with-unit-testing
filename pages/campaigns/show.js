@@ -10,9 +10,9 @@ class ShowCampaign extends Component {
   static async getInitialProps(props) {
     const cn = await campaign(props.query.address);
     const cnSummary = await cn.methods.getCampaignSummary().call();
-    console.log(cnSummary);
 
     return {
+      campaignAddress: props.query.address,
       minContribution: cnSummary.minContribution,
       contractBalance: cnSummary.contractBalance,
       requestCount: cnSummary.requestCount,
@@ -71,7 +71,7 @@ class ShowCampaign extends Component {
         <Grid>
           <GridColumn width={10}>{this.renderCards()}</GridColumn>
           <GridColumn width={6}>
-            <ContributeForm />
+            <ContributeForm campaignAddress={this.props.campaignAddress} />
           </GridColumn>
         </Grid>
       </Layout>

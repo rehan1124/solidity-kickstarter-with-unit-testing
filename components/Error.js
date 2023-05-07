@@ -1,18 +1,14 @@
 import React from "react";
+import { Message } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
-export default (props) => {
-  return (
-    <div id="error-message" className="ui error message">
-      <i
-        id="close-error"
-        className="close icon"
-        data-ol-has-click-handler=""
-      ></i>
-      <div className="header">There were some errors with your submission</div>
-      <ul className="list">
-        <li>{props.errorMessage}</li>
-      </ul>
-    </div>
-  );
-};
+const Error = ({ errorMessage }) => (
+  <Message error>
+    <Message.Header>There were some errors with your submission</Message.Header>
+    <Message.List>
+      <Message.Item>{errorMessage}</Message.Item>
+    </Message.List>
+  </Message>
+);
+
+export default Error;
