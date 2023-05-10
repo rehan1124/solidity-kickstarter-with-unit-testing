@@ -2,10 +2,9 @@ import React, { useState } from "react";
 
 import "semantic-ui-css/semantic.min.css";
 import { Header, Form, Button } from "semantic-ui-react";
-
 import Layout from "../../../components/Layout";
-
 import campaign from "../../../ethereum/campaign";
+import Error from "../../../components/Error";
 import web3 from "../../../ethereum/web3";
 
 import { Link, Router } from "../../../routes";
@@ -14,6 +13,9 @@ const RequestNew = ({ address }) => {
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
   const [recipient, setRecipient] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [hasError, setHasError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleDescriptionChange = async (event) => {
     setDescription(event.target.value);
@@ -27,10 +29,35 @@ const RequestNew = ({ address }) => {
     setRecipient(event.target.value);
   };
 
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setHasError(false);
+    const cn = campaign(address);
+    try {
+      const accounts = await web3.eth.getAccounts();
+      console.log(`Accounts attached to the Metamask user: ${accounts}`);
+      await cn.methods
+        .createRequest(description, web3.utils.toWei(value, "ether"), recipient)
+        .send({
+          from: accounts[0],
+        });
+    } catch (err) {
+      console.log(err);
+      setHasError(true);
+      setErrorMessage(err.message);
+    } finally {
+      setLoading(false);
+      setValue("");
+      setDescription("");
+      setRecipient("");
+    }
+  };
+
   return (
     <Layout>
       <Header size="medium">Create a new request</Header>
-      <Form>
+      <Form onSubmit={handleFormSubmit}>
         <Form.Field>
           <label>Description</label>
           <input
@@ -55,10 +82,11 @@ const RequestNew = ({ address }) => {
             onChange={handleRecipientChange}
           />
         </Form.Field>
-        <Button type="submit" primary>
+        <Button type="submit" loading={loading} primary>
           Create!
         </Button>
       </Form>
+      {hasError && <Error errorMessage={errorMessage} />}
     </Layout>
   );
 };
