@@ -59,7 +59,6 @@ const CampaignNew = () => {
             onChange={handleInputOnChange}
           />
         </Form.Field>
-        <Message error content={errorMessage} />
         <Button
           primary
           type="submit"
