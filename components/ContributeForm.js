@@ -18,8 +18,8 @@ const ContributeForm = ({ campaignAddress }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitted contribution: ", contribution);
-    console.log("hasError: ", hasError);
+    // console.log("Submitted contribution: ", contribution);
+    // console.log("hasError: ", hasError);
     setLoading(true);
     try {
       const getCampaign = await campaign(campaignAddress);
