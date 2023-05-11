@@ -42,6 +42,8 @@ const RequestNew = ({ address }) => {
         .send({
           from: accounts[0],
         });
+
+      Router.pushRoute(`/campaigns/${address}/requests`);
     } catch (err) {
       console.log(err);
       setHasError(true);
@@ -56,6 +58,9 @@ const RequestNew = ({ address }) => {
 
   return (
     <Layout>
+      <Link route={`/campaigns/${address}/requests`}>
+        <u>Back</u>
+      </Link>
       <Header size="medium">Create a new request</Header>
       <Form onSubmit={handleFormSubmit}>
         <Form.Field>
