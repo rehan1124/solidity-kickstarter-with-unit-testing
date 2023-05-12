@@ -1,16 +1,22 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
+import web3 from "../ethereum/web3";
+import campaign from "../ethereum/campaign";
 
-const RequestListTable = ({ requestsList }) => {
+const RequestListTable = ({ requestsList, totalApprovers }) => {
   const addRow = () => {
     return requestsList.map((request, index) => {
       return (
         <Table.Row key={index}>
           <Table.Cell>{index}</Table.Cell>
           <Table.Cell>{request.description}</Table.Cell>
-          <Table.Cell>{request.value}</Table.Cell>
+          <Table.Cell>
+            {web3.utils.fromWei(request.value, "ether")} ETH
+          </Table.Cell>
           <Table.Cell>{request.recipient}</Table.Cell>
-          <Table.Cell>{request.approvalCount}</Table.Cell>
+          <Table.Cell>
+            {request.approvalCount} / {totalApprovers}
+          </Table.Cell>
           <Table.Cell>Approve</Table.Cell>
           <Table.Cell>Finalize</Table.Cell>
         </Table.Row>
