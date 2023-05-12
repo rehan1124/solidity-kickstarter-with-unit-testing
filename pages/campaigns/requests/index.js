@@ -2,30 +2,18 @@ import React from "react";
 import { Header, Button, Table } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import Layout from "../../../components/Layout";
+import RequestListTable from "../../../components/RequestListTable";
 import { Link } from "../../../routes";
 import campaign from "../../../ethereum/campaign";
 
-const RequestIndex = ({ address }) => {
-  // const { Header, Row, HeaderCell, Body } = Table;
+const RequestIndex = ({ address, requestsList }) => {
   return (
     <Layout>
       <Header size="medium">Requests list</Header>
       <Link route={`/campaigns/${address}/requests/new`}>
         <Button primary>Add request</Button>
       </Link>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>ID</Table.HeaderCell>
-            <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Amount</Table.HeaderCell>
-            <Table.HeaderCell>Recipient</Table.HeaderCell>
-            <Table.HeaderCell>Approval count</Table.HeaderCell>
-            <Table.HeaderCell>Approve</Table.HeaderCell>
-            <Table.HeaderCell>Finalize</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-      </Table>
+      <RequestListTable requestsList={requestsList} />
     </Layout>
   );
 };
