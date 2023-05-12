@@ -1,9 +1,16 @@
+// Standard library import
 import React from "react";
+
+// Any 3rd party imports
 import { Header, Button, Table } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
+
+// Local components import
 import Layout from "../../../components/Layout";
 import RequestListTable from "../../../components/RequestListTable";
 import { Link } from "../../../routes";
+
+// Ethereum imports
 import campaign from "../../../ethereum/campaign";
 
 const RequestIndex = ({ address, requestsList, totalApprovers }) => {
@@ -12,6 +19,9 @@ const RequestIndex = ({ address, requestsList, totalApprovers }) => {
       <Header size="medium">Requests list</Header>
       <Link route={`/campaigns/${address}/requests/new`}>
         <Button primary>Add request</Button>
+      </Link>
+      <Link route={`/campaigns/${address}`}>
+        <u style={{ float: "right" }}>Back</u>
       </Link>
       <RequestListTable
         address={address}
@@ -35,6 +45,9 @@ RequestIndex.getInitialProps = async (props) => {
       })
   );
   console.log(`Requests under the campaign ${address}`, requestsList);
+  console.log(
+    `Total approvers or contributors to the campaign: ${totalApprovers}`
+  );
   return { address, requestsCount, requestsList, totalApprovers };
 };
 
