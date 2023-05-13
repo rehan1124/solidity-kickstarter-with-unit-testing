@@ -15,14 +15,11 @@ const RequestListTable = ({ address, requestsList, totalApprovers }) => {
   // Setting state
   const [errorMessage, setErrorMessage] = useState("");
   const [hasError, setHasError] = useState(false);
-  // const [loadingApprove, setLoadingApprove] = useState(false);
-  // const [loadingFinalize, setLoadingFinalize] = useState(false);
 
   // Approve button
   const handleApproveClick = async (event) => {
     setHasError(false);
     try {
-      // setLoadingApprove(true);
       const cn = await campaign(address);
       const accounts = await web3.eth.getAccounts();
       const requestIndex = Number(
@@ -33,7 +30,6 @@ const RequestListTable = ({ address, requestsList, totalApprovers }) => {
     } catch (err) {
       setHasError(true);
       setErrorMessage(err.message);
-      // setLoadingApprove(false);
     }
   };
 
@@ -41,7 +37,6 @@ const RequestListTable = ({ address, requestsList, totalApprovers }) => {
   const handleFinalizeClick = async (event) => {
     setHasError(false);
     try {
-      // setLoadingFinalize(true);
       const cn = await campaign(address);
       const accounts = await web3.eth.getAccounts();
       const requestIndex = Number(
@@ -54,7 +49,6 @@ const RequestListTable = ({ address, requestsList, totalApprovers }) => {
       console.log(err);
       setHasError(true);
       setErrorMessage(err.message);
-      // setLoadingFinalize(false);
     }
   };
 
@@ -93,7 +87,6 @@ const RequestListTable = ({ address, requestsList, totalApprovers }) => {
             <Button
               color={request.complete ? "red" : "teal"}
               disabled={request.complete ? true : false}
-              // loading={loadingFinalize}
               onClick={handleFinalizeClick}
             >
               Finalize
