@@ -15,24 +15,60 @@ const RequestListTable = ({ address, requestsList, totalApprovers }) => {
   // Setting state
   const [errorMessage, setErrorMessage] = useState("");
   const [hasError, setHasError] = useState(false);
+  // const [loadingApprove, setLoadingApprove] = useState(false);
+  // const [loadingFinalize, setLoadingFinalize] = useState(false);
 
+  // Approve button
   const handleApproveClick = async (event) => {
     setHasError(false);
     try {
+      // setLoadingApprove(true);
       const cn = await campaign(address);
       const accounts = await web3.eth.getAccounts();
-      const requestIndex = Number(event.target.getAttribute("data-button-id"));
+      const requestIndex = Number(
+        event.target.getAttribute("data-button-approve-id")
+      );
       await cn.methods.approveRequest(requestIndex).send({ from: accounts[0] });
       window.location.reload(false);
     } catch (err) {
       setHasError(true);
       setErrorMessage(err.message);
+      // setLoadingApprove(false);
     }
   };
+
+  // Finalize button
+  const handleFinalizeClick = async (event) => {
+    setHasError(false);
+    try {
+      // setLoadingFinalize(true);
+      const cn = await campaign(address);
+      const accounts = await web3.eth.getAccounts();
+      const requestIndex = Number(
+        event.target.getAttribute("data-button-finalize-id")
+      );
+      await cn.methods
+        .finalizeRequest(requestIndex)
+        .send({ from: accounts[0] });
+    } catch (err) {
+      console.log(err);
+      setHasError(true);
+      setErrorMessage(err.message);
+      // setLoadingFinalize(false);
+    }
+  };
+
+  // For each request, generate table row.
   const addRow = () => {
     return requestsList.map((request, index) => {
       return (
-        <Table.Row key={index}>
+        <Table.Row
+          key={index}
+          disabled={request.complete}
+          positive={
+            request.approvalCount >= totalApprovers / 2 && !request.complete
+          }
+        >
           <Table.Cell>{index}</Table.Cell>
           <Table.Cell>{request.description}</Table.Cell>
           <Table.Cell>
@@ -45,19 +81,29 @@ const RequestListTable = ({ address, requestsList, totalApprovers }) => {
           <Table.Cell>
             <Button
               color="green"
+              data-button-approve-id={index}
+              // loading={loadingApprove}
+              disabled={request.complete ? true : false}
               onClick={handleApproveClick}
-              data-button-id={index}
             >
               Approve
             </Button>
           </Table.Cell>
           <Table.Cell>
-            <Button>Finalize</Button>
+            <Button
+              color={request.complete ? "red" : "teal"}
+              disabled={request.complete ? true : false}
+              // loading={loadingFinalize}
+              onClick={handleFinalizeClick}
+            >
+              Finalize
+            </Button>
           </Table.Cell>
         </Table.Row>
       );
     });
   };
+
   return (
     <>
       <Table>

@@ -2,7 +2,7 @@
 import React from "react";
 
 // Any 3rd party imports
-import { Header, Button, Table } from "semantic-ui-react";
+import { Header, Button, Table, Menu, Icon, Label } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 // Local components import
@@ -13,7 +13,12 @@ import { Link } from "../../../routes";
 // Ethereum imports
 import campaign from "../../../ethereum/campaign";
 
-const RequestIndex = ({ address, requestsList, totalApprovers }) => {
+const RequestIndex = ({
+  address,
+  requestsList,
+  totalApprovers,
+  requestsCount,
+}) => {
   return (
     <Layout>
       <Header size="medium">Requests list</Header>
@@ -28,6 +33,10 @@ const RequestIndex = ({ address, requestsList, totalApprovers }) => {
         requestsList={requestsList}
         totalApprovers={totalApprovers}
       />
+      <Label basic color="blue">
+        Requests found:
+        <Label.Detail>{requestsCount}</Label.Detail>
+      </Label>
     </Layout>
   );
 };

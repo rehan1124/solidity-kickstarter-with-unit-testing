@@ -1,13 +1,18 @@
+// Standard library import
 import React, { useState } from "react";
 
+// Any 3rd party imports
 import "semantic-ui-css/semantic.min.css";
 import { Header, Form, Button } from "semantic-ui-react";
-import Layout from "../../../components/Layout";
-import campaign from "../../../ethereum/campaign";
-import Error from "../../../components/Error";
-import web3 from "../../../ethereum/web3";
 
+// Local components
+import Layout from "../../../components/Layout";
+import Error from "../../../components/Error";
 import { Link, Router } from "../../../routes";
+
+// Ethereum imports
+import campaign from "../../../ethereum/campaign";
+import web3 from "../../../ethereum/web3";
 
 const RequestNew = ({ address }) => {
   const [value, setValue] = useState("");
